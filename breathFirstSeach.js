@@ -1,5 +1,7 @@
 //Busca em Largura
 
+const VALUE = 0;
+const DISTANCE = 1;
 //Representando o grafo através de Listas de adjacência
 //o Grafo está no diretório grafo_img
 const graph = [
@@ -20,50 +22,27 @@ const graph = [
   [6, 7, 13], //14 
 ];
 
-//console.log(graph[1].length);
-
 
 let BFS = (graph, source) => {
 //    let nodeNumbers = graph.length;
   let queue = [];
   let marked = [];  
   let result = [];  
-  let distance = 1;
-  queue.push(source);
+  let startingDistance = 0;
+  queue.push([source, startingDistance]);
+  marked.push(source);
   while(queue.length){
-    let node = queue.shift();
-    for(let i = 0; i < graph[node].length; i++){
-      if(!marked.includes(graph[node][i]) && (graph[node][i] != 1)){
-        marked.push(graph[node][i]);
-        result.push([source, graph[node][i], distance])
-        if(!queue.includes(graph[node][i])){
-          queue.push(graph[node][i]);
-        }
+    let node = queue.shift();  
+    node[DISTANCE] = node[DISTANCE] + 1;
+    for(let i = 0; i < graph[node[VALUE]].length; i++){
+      if(!marked.includes(graph[node[VALUE]][i])){
+        marked.push(graph[node[VALUE]][i]);
+        result.push([source, graph[node[VALUE]][i], node[DISTANCE]])    
+        queue.push([graph[node[VALUE]][i], node[DISTANCE]]);
       }              
     }
-    distance++;  
   }
   return result;    
 };
 
 console.log(BFS(graph, 1)); 
-
-
-/*
-
-let BFS = (graph, source) => {
-  //    let nodeNumbers = graph.length;
-      let queue = [];
-      let marked = [];
-      let cont = 1;  
-      queue.push(source);
-      while(queue.length){
-        let node = queue.shift();
-        for(let i = 0; graph[node].length; i++){
-          marked.push(graph[node][i]);
-        }
-      }
-      return marked;
-    };
-  
-    console.log(BFS(graph, 1)); */
