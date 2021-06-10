@@ -2,16 +2,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class App {
+/*
+* Aluno: Fábio Rodrigues Pereira
+* Basta copiar o código e colar em: https://www.ideone.com/
+* Depois selecionar a opção Run.
+*/
+
+public class Main {
     static double arr[] = new double[100];
 
     public static void main(String[] args) throws Exception {
 
         // geração vetor gaussiano
-        Random random = new Random();
+        Random random = new Random(System.currentTimeMillis());
+
         for (int i = 0; i < 100; i++) {
             arr[i] = random.nextGaussian() * 0.2 + 0.5;
-            // System.out.println("Value: " + arr[i]);
         }
         bucketSort(arr, 8);
 
@@ -30,12 +36,11 @@ public class App {
         @SuppressWarnings("unchecked")
         List<Double>[] bucket = new ArrayList[n];
 
-        // Cria os buckets vazios
-        for (int i = 0; i < n; i++)
-            bucket[i] = new ArrayList<Double>();
-
-        // Adiciona os elementos nos buckets
+        // Cria e adiciona os elementos nos respectivos buckets
         for (int i = 0; i < n; i++) {
+            if (bucket[i] == null)
+                bucket[i] = new ArrayList<Double>();
+
             for (int j = 0; j < v.length; j++) {
                 if (v[j] > standardDeviationPrevious && v[j] < standardDeviation) {
                     bucket[i].add(v[j]);
@@ -55,12 +60,6 @@ public class App {
         }
     }
 
-    /**
-     * Este método ordena um ArrayList de double usando Quicksort.
-     * 
-     * @param input é um ArrayList de double.
-     * @return um ArrayList de doubles ordenados.
-     */
     static List<Double> quicksort(List<Double> input) {
 
         if (input.size() <= 1) {
@@ -86,14 +85,6 @@ public class App {
         return concatenate(quicksort(less), pivot, quicksort(greater));
     }
 
-    /**
-     * Junta o list less, o pivot double e o list maior em um único list.
-     * 
-     * @param less    ArrayList double com valores menores que pivô.
-     * @param pivot   o valor double do pivô.
-     * @param greater ArrayList double com valores maiores que pivô.
-     * @return o ArrayList double após a junção.
-     */
     static List<Double> concatenate(List<Double> less, double pivot, List<Double> greater) {
 
         List<Double> list = new ArrayList<Double>();
